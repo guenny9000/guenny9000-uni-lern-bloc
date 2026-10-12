@@ -121,3 +121,19 @@ Jedes Modell soll ausschließlich überprüfbare Resultate melden:
 5. PR-Status und zuletzt geprüfter Commit; keine Merge- oder Betriebsänderung ohne gesonderte Freigabe.
 
 **Ergebnis:** Die Antworten sind als Arbeitsauftrag brauchbar, aber keine neuen technischen Mess- oder Testbelege. Erst konkrete Pfade, Quellen, Commits und reproduzierbare Ergebnisse ändern diese Einstufung.
+
+
+## Nachprüfung der Pull Requests und Messquellen – 2026-10-12
+
+### CI-Nachweis zum zuletzt abgerufenen Stand
+- `v91-core-system` PR #3, Head-Commit `03bcb938ff6981e44899548e76ffbcd4e425a889`: GitHub Actions `v91 Audit Pipeline`, Lauf 15 (`38310568692`), abgeschlossen mit `success`. Die sichtbaren Schritte `Run Unit Tests` und `Hash Verification` waren erfolgreich. Das belegt den Erfolg dieser Pipeline auf diesem Commit, nicht den Live-Betrieb oder echte Hardwaremessungen.
+- `Aurelia-Prisma` PR #234, Head-Commit `e9059143fe07cdbf7d11d0de4e761d5f47b58a80`: `Reality-First Safety Checks`, Lauf 3 (`38310613171`), und `Python Quality and Safety Checks`, Lauf 12 (`38310613138`), beide `success`. Sichtbar erfolgreich waren die V94-Regressionstests, Compile-Schritte und im zweiten Lauf der Pylint-Fehlercheck. Das belegt diese Prüfungen auf diesem Commit, nicht den produktiven Betrieb.
+- Beide PRs waren beim Abruf weiterhin offen, als Entwürfe markiert und nicht gemergt. Kein Merge und keine Bereitstellung wurden durch diese Prüfung ausgeführt.
+
+### Suche nach vorhandenen Messquellen
+Eine GitHub-Code-Suche nach Begriffen zu Hardwaremessungen/Telemetry, `nvidia-smi`/NVML/psutil sowie `ledger.jsonl` lieferte in den abgefragten Repositories keine Treffer. **Diese begrenzte Suche beweist nicht, dass keine Messungen existieren.** Lokale Workspace-Verzeichnisse, andere Repositories, private Inhalte ohne Suchzugriff, Artefakte, externe Logs und frühere lokale Messergebnisse sind damit nicht ausgeschlossen. Der bekannte Hinweis auf bereits vorhandene Messungen bleibt offen, bis deren konkreter Speicherort oder Beleg gefunden wurde.
+
+### Nächster sicherer Schritt
+1. Messprotokoll bzw. den bereits vorhandenen Messwert aus dem tatsächlichen lokalen Speicherort identifizieren und Quelle, Zeit, Einheit und Messmethode erfassen.
+2. Einen separaten Hardware-Lesezugriff testen, ohne Steuerbefehle auszuführen; Ausgabe und Fehler unverändert protokollieren.
+3. Für jede Änderung den geprüften Commit festhalten und nur den kleinsten passenden Test ergänzen. Die bestehenden PRs erst nach vollständiger Diff-Prüfung und erfolgreicher CI- sowie Sicherheitsprüfung zur Übernahme erwägen.

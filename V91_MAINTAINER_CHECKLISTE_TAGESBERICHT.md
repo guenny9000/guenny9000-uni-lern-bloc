@@ -35,6 +35,7 @@ Zweck: Prüfaufträge und Ergebnisse nachvollziehbar dokumentieren. Diese Datei 
 - [ ] CI-Ergebnisse mit Workflow, Lauf-ID, Commit-SHA und tatsächlich bestandenen Schritten dokumentieren.
 - [ ] Tests möglichst reproduzierbar auf dem aktuellen Stand ausführen, wenn Zugriff und Berechtigung vorhanden sind.
 - [ ] CI-Erfolg nicht als Beweis für Hardwarezugriff, Live-Telemetrie oder Produktivbetrieb ausgeben.
+- [ ] Vor automatischer Wiederherstellung, Dienstneustarts oder sonstigen Änderungen an laufenden Systemen prüfen: ausdrückliche Autorisierung, betroffene Dienste, Auslösebedingungen, Begrenzung der Versuche, Protokollierung, anschließende Gesundheitsprüfung und Rückweg. Ein vorhandener Schalter oder ein erfolgreicher Skript-Exitcode ersetzt diese Prüfung nicht.
 - [ ] Keine automatische Zusammenführung, Bereitstellung oder produktive Änderung aus dieser Checkliste ableiten.
 
 ## 5. Ledger und Audit prüfen
@@ -44,8 +45,8 @@ Zweck: Prüfaufträge und Ergebnisse nachvollziehbar dokumentieren. Diese Datei 
 - [ ] Prüfbefehl, Codeversion, Eingabedatei, unveränderte Ausgabe und Exit-Code festhalten.
 - [ ] Ein Tagesbericht darf vorhandene Daten ergänzen, aber keine fehlenden Ereignisse rückdatieren oder erfinden.
 - [ ] SHA-256 und `fsync()` allein machen einen Speicher nicht unveränderbar. Für einen WORM-Nachweis braucht es zusätzlich eine tatsächlich durchgesetzte Schreib-/Löschsperre oder unveränderbare Speicherung sowie einen unabhängig prüfbaren Nachweis.
-- [ ] Keine Ledger-Historie überschreiben, zurücksetzen oder neu versiegeln, um einen Test grün erscheinen zu lassen.
 - [ ] Einen Bericht nicht ungeprüft in ein WORM-Ledger schreiben. Erst Schema, Berechtigung, Append-Verfahren und Auswirkungen prüfen; bevorzugt zunächst einen getrennten Bericht außerhalb des Ledgers erstellen.
+- [ ] Keine Ledger-Historie überschreiben, zurücksetzen oder neu versiegeln, um einen Test grün erscheinen zu lassen.
 
 ## 6. Unabhängige Gegenprüfung
 

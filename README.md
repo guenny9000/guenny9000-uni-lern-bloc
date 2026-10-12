@@ -97,3 +97,27 @@ Zwei Modelle haben ähnliche Prüfbereiche genannt: simulierte Werte und passive
 Die beiden Antworten liefern eine nützliche Prüfliste, aber noch keinen Nachweis für Hardwarezugriff, eine aktuelle Messung, erfolgreiche Tests oder einen produktiven Ledger. Die Aussage, der Ledger müsse zwingend jetzt gefüllt werden, ist ohne Prüfung möglicher bestehender Daten zu weitgehend.
 
 **Nächste Schritte:** (1) Bestehende Messprotokolle und lokale Messschnittstelle auffinden. (2) aktuellen Code und Tests der PR-Branches tatsächlich prüfen. (3) erst danach kleine, überprüfbare Korrekturen vorschlagen und getrennt testen.
+
+
+## Auswertung der Antworten Modell 1 und Modell 2 – Ergänzung vom 2026-10-12
+
+### Gemeinsamer Kern
+Beide Antworten bestätigen als sinnvolle nächste Schritte: vorhandene Messdaten zuerst auffinden; Hardwarezugriff anhand einer konkreten Schnittstelle belegen; reproduzierbare Fehler dokumentieren; vorhandene Ledger-Daten schützen; Simulationen nicht blind entfernen; offene Pull Requests vor einer Übernahme prüfen.
+
+### Einstufung der Aussagen
+- **BELEGT als Inhalt der Antworten:** Beide Modelle haben diese Prüfschritte empfohlen.
+- **TEILWEISE BELEGT:** Frühere Prüfungen deuteten auf simulierte Controller-Werte und einen Platzhalter-Worker in v91-core-system hin. Vor einer Änderung muss der aktuelle Stand des betroffenen Branches und von main verglichen werden.
+- **UNBEKANNT:** Ob die Modelle selbst Zugriff auf die lokale Hardware haben, ob die bekannte Messung live oder gespeichert ist und ob die aktuelle PR-Version erfolgreich getestet wurde. Die Antworten liefern dafür keine Pfade, Zeitstempel, Messwerte oder Testausgaben.
+- **NICHT ALS BEWIESEN ÜBERNEHMEN:** Statuszeilen wie STATUS:AKTIV, VALID:TRUE, DRIFT:0/3, CS:SECURE und SEQ:9102 sind ohne nachvollziehbare Datenquelle und Prüfverfahren keine technischen Nachweise.
+- **Präzisierung:** Die Forderung, jedes Skript und jede Messung müsse „mathematisch und physikalisch belegbar“ sein, ist als Ziel zu allgemein. Für jede konkrete Behauptung müssen eine passende Messmethode, Quelle, Einheit, Zeit und reproduzierbare Prüfung angegeben werden.
+- **WORM-Präzisierung:** Eine SHA-256-Kette hilft, Änderungen an verknüpften Einträgen zu erkennen, garantiert aber allein keine Unveränderbarkeit. Vorhandene Daten zuerst sichern und prüfen; keine Historie künstlich erzeugen. Auch fsync() ist für sich allein kein WORM-Schutz.
+
+### Nächste Prüfrunde – konkrete Ausgabe verlangen
+Jedes Modell soll ausschließlich überprüfbare Resultate melden:
+1. Repository und Branch, genauer Dateipfad sowie Zeilen oder Commit.
+2. Gefundene Messdatei bzw. Log: Zeitstempel, Messgröße, Einheit, Quelle und Kennzeichnung gespeichert oder live.
+3. Hardware-Schnittstelle und den tatsächlich ausgeführten Zugriffstest samt Ausgabe. Wenn kein Zugriff bestand: UNBEKANNT – nicht getestet.
+4. Fehler mit minimaler Reproduktionsanleitung, IST/SOLL und vollständigem Testergebnis. Vorhandene Tests nicht als ausgeführt darstellen.
+5. PR-Status und zuletzt geprüfter Commit; keine Merge- oder Betriebsänderung ohne gesonderte Freigabe.
+
+**Ergebnis:** Die Antworten sind als Arbeitsauftrag brauchbar, aber keine neuen technischen Mess- oder Testbelege. Erst konkrete Pfade, Quellen, Commits und reproduzierbare Ergebnisse ändern diese Einstufung.

@@ -76,3 +76,24 @@ Schließe mit einer klaren Einstufung je Aussage: **BELEGT**, **TEILWEISE BELEGT
 - Es wurde bereits berichtet, dass Hardware-Messungen bzw. Ergebnisse vorhanden sind. Suche aktiv nach diesen konkreten Belegen. Falls sie in GitHub nicht enthalten sind, frage gezielt nach dem fehlenden Protokoll, statt zu behaupten, es gebe keine Messung.
 
 **Wichtig:** Dieser Lernblock ist ein Prüfauftrag. Er beweist weder, dass ein Modell Hardwarezugriff hat, noch dass ein Repository fehlerfrei oder produktiv ist.
+
+
+## Auswertung der ersten zwei Modellantworten – 2026-10-12
+
+Zwei Modelle haben ähnliche Prüfbereiche genannt: simulierte Werte und passiver Worker in `v91-core-system`, knappe Dokumentation in `V91_Agathon`, eingeschränkte Sicht auf private Repositories und offene Prüfungen der Pull Requests. Diese Übereinstimmung ist ein Hinweis für die weitere Prüfung, aber noch keine unabhängige Bestätigung, solange beide Modelle dieselben Ausgangsinformationen verwenden.
+
+### Korrekturen gegen voreilige Schlussfolgerungen
+
+- **Nicht einfach Simulation löschen:** Zuerst klären, ob bereits eine reale Messquelle oder ein Messprotokoll existiert. Danach einen echten Messadapter gezielt ergänzen und Simulation klar als Simulation markieren. Fehlende Hardwarezugriffe müssen ehrlich als unbekannt gemeldet werden.
+- **Vorhandene Messungen suchen:** Frühere Messwerte oder Protokolle nicht verwerfen. Herkunft, Zeitpunkt, Einheit und Messmethode dokumentieren und Live-Messung von gespeicherten Ergebnissen unterscheiden.
+- **Ledger nicht künstlich befüllen:** Ein leeres GitHub-Repository ist kein Beweis dafür, dass anderswo kein Ledger existiert. Erst alle verfügbaren Speicherorte und Backups prüfen. Keine neue Hash-Kette über ungeprüfte oder fehlende Historie legen und keinen alten Datenbestand überschreiben.
+- **Hash-Kette richtig einordnen:** SHA-256-Verknüpfung kann nachträgliche Änderungen erkennbar machen, beweist aber allein weder Unveränderbarkeit noch vollständige Revisionssicherheit. `fsync()` allein ist keine WORM-Garantie. Zusätzliche Zugriffskontrollen, externe Anker/Signaturen, Wiederherstellungstests und unabhängige Verifikation können erforderlich sein.
+- **mTLS und Gossip Mesh nicht pauschal einführen:** Erst konkrete Kommunikationswege, Bedrohungsmodell und Betriebskosten untersuchen. Zertifikate allein aktivieren noch keine gegenseitige TLS-Prüfung; ein Gossip-Netz ist nicht automatisch sicherer oder verfügbarer.
+- **Pull Requests nicht automatisch mergen:** PR #3 und PR #234 bleiben Entwürfe, bis der aktuelle Stand, die Tests und die Auswirkungen geprüft wurden. Tests müssen zur tatsächlichen Schnittstelle passen und auf dem aktuellen Branch-Stand erfolgreich sein.
+- **Statussiegel nicht übernehmen:** Werte wie `VALID:TRUE`, `DRIFT:0/3`, `CS:SECURE` und Sequenznummern sind Behauptungen, solange die zugehörigen Daten, Prüfregeln und reproduzierbaren Ergebnisse fehlen.
+
+### Ergebnis der Modellantworten
+
+Die beiden Antworten liefern eine nützliche Prüfliste, aber noch keinen Nachweis für Hardwarezugriff, eine aktuelle Messung, erfolgreiche Tests oder einen produktiven Ledger. Die Aussage, der Ledger müsse zwingend jetzt gefüllt werden, ist ohne Prüfung möglicher bestehender Daten zu weitgehend.
+
+**Nächste Schritte:** (1) Bestehende Messprotokolle und lokale Messschnittstelle auffinden. (2) aktuellen Code und Tests der PR-Branches tatsächlich prüfen. (3) erst danach kleine, überprüfbare Korrekturen vorschlagen und getrennt testen.

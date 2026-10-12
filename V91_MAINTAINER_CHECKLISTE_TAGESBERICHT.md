@@ -45,6 +45,7 @@ Zweck: Prüfaufträge und Ergebnisse nachvollziehbar dokumentieren. Diese Datei 
 - [ ] Ein Tagesbericht darf vorhandene Daten ergänzen, aber keine fehlenden Ereignisse rückdatieren oder erfinden.
 - [ ] SHA-256 und `fsync()` allein machen einen Speicher nicht unveränderbar. Für einen WORM-Nachweis braucht es zusätzlich eine tatsächlich durchgesetzte Schreib-/Löschsperre oder unveränderbare Speicherung sowie einen unabhängig prüfbaren Nachweis.
 - [ ] Keine Ledger-Historie überschreiben, zurücksetzen oder neu versiegeln, um einen Test grün erscheinen zu lassen.
+- [ ] Einen Bericht nicht ungeprüft in ein WORM-Ledger schreiben. Erst Schema, Berechtigung, Append-Verfahren und Auswirkungen prüfen; bevorzugt zunächst einen getrennten Bericht außerhalb des Ledgers erstellen.
 
 ## 6. Unabhängige Gegenprüfung
 
@@ -85,6 +86,15 @@ Merge/Bereitstellung/Produktivänderung: JA/NEIN
 Gesamteinstufung: BELEGT / TEILWEISE BELEGT / UNBEKANNT / WIDERLEGT
 Offene Punkte und verantwortlicher nächster Schritt:
 ```
+
+## 8. Regeln für Beispiele und Statuswerte
+
+- Beispielberichte müssen sichtbar als `BEISPIEL – KEINE REALDATEN` markiert sein.
+- Keine konkreten Sequenzen, Hashes, Knotennamen, Zeitstempel, Drift-Werte oder Statusmeldungen erfinden und als echte Betriebsdaten darstellen.
+- Platzhalter wie `<SEQ AUS QUELLE>` und `<HASH AUS LEDGER>` verwenden, bis die Originalquelle geprüft wurde.
+- `ACTIVE`, `SYNCED`, `VALID:TRUE`, `DRIFT:0/3` oder `CS:SECURE` sind Behauptungen, solange keine zugehörigen Rohdaten, Prüfmethode und Ergebnisse vorliegen.
+- Erfunden wirkende oder nicht belegte Beispielknoten – etwa `SOLAR-DESKTOP-01`, `EDGE-PI-02` oder `WORKSHOP-NODE-03` – dürfen nicht als tatsächlich vorhandene Geräte ausgegeben werden.
+- Ein beispielhafter Hash-Ausschnitt oder eine erfundene Sequenznummer ist kein Nachweis und darf nicht in den echten Tagesbericht oder das produktive Ledger übernommen werden.
 
 ## Reality-First-Schlussregel
 

@@ -1,0 +1,86 @@
+{
+  "contract_id": "V91_LEARNING_CONTRACT",
+  "version": "1.0.0",
+  "date": "2026-10-13",
+  "purpose": "Enable different models and algorithmic systems to inspect repositories, learn from documented evidence, and propose safe, reproducible improvements without pretending to have unavailable capabilities.",
+  "evidence_states": [
+    "UNBEKANNT",
+    "DOKUMENTIERT",
+    "IMPLEMENTIERT",
+    "VERIFIZIERT",
+    "PRODUKTIV"
+  ],
+  "finding_states": [
+    "BELEGT",
+    "TEILWEISE_BELEGT",
+    "UNBEKANNT",
+    "NICHT_GETESTET",
+    "WIDERLEGT"
+  ],
+  "source_kinds": [
+    "repository_file",
+    "commit",
+    "pull_request",
+    "workflow_run",
+    "test_output",
+    "log",
+    "measurement",
+    "external_documentation"
+  ],
+  "measurement_kinds": [
+    "GESPEICHERT",
+    "LIVE",
+    "SIMULATION",
+    "UNBEKANNT"
+  ],
+  "principles": {
+    "claim_is_not_evidence": true,
+    "unknown_is_not_failure": true,
+    "missing_search_result_does_not_prove_absence": true,
+    "preserve_existing_data": true,
+    "isolate_before_change": true,
+    "no_production_changes_without_explicit_authorization": true,
+    "no_secret_disclosure": true,
+    "no_privilege_escalation": true,
+    "no_merge_without_explicit_authorization": true,
+    "simulation_must_be_labeled": true,
+    "hardware_access_requires_actual_interface_and_test": true,
+    "learning_claim_requires_documented_source_and_result": true
+  },
+  "required_finding_fields": [
+    "status",
+    "claim",
+    "source",
+    "limitations",
+    "next_safe_step"
+  ],
+  "required_measurement_fields": [
+    "measurement_status",
+    "source",
+    "captured_at",
+    "quantity",
+    "unit",
+    "method"
+  ],
+  "workflow": [
+    "understand_request",
+    "inspect_available_sources",
+    "declare_capabilities",
+    "separate_observation_inference_proposal",
+    "run_authorized_isolated_checks",
+    "record_results",
+    "propose_small_reversible_change",
+    "verify_change",
+    "report_unresolved_unknowns"
+  ],
+  "prohibited_claims_without_evidence": [
+    "live_hardware_access",
+    "production_ready",
+    "tests_passed",
+    "immutable_ledger",
+    "autonomous_self_modification",
+    "damage_occurred",
+    "no_damage_occurred"
+  ],
+  "status_rule": "A status may advance only when the evidence required for that state is attached and independently checkable."
+}

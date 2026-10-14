@@ -163,3 +163,15 @@ Offene Punkte und verantwortlicher nächster Schritt:
 ### Korrektur zur GitHub-Historie – 2026-10-14
 
 Eine neue statische Regressionstest-Datei wurde versehentlich einmal direkt auf dem Default-Branch von `Aurelia-Prisma` angelegt. Der Fehler wurde unmittelbar korrigiert: Die Datei wurde wieder entfernt und ausschließlich auf dem Review-Branch neu angelegt. Aktuell ist `tests/test_v95_restart_script_safety.py` auf `main` nicht vorhanden; die Git-Historie enthält den Additions-Commit und den anschließenden Revert-Commit. Es wurden keine Laufzeitdateien, Daten oder Dienste verändert. Diese Abweichung von der vorgesehenen PR-only-Arbeitsweise wird ausdrücklich dokumentiert statt verschwiegen.
+
+
+## Aktualisierung nach den Repository-Merges – 2026-10-14, ca. 16:22 UTC
+
+Der obige laufende Bericht dokumentiert den früheren Prüfstand. Seitdem wurden diese Änderungen tatsächlich zusammengeführt:
+
+- `v91-core-system` PR #10 → `267f1f45a48b342f20c75954d5daa406a2bae31b`.
+- `v91-core-system` PR #11 (fehlende CPU/RAM-Telemetrie als `UNKNOWN`, nicht als Null; keine Aktion ohne Messnachweis) → `a9131bf80302b1c858c66877db7e7139aa9531ea`. CI-Lauf [38597167491](https://github.com/guenny9000/v91-core-system/actions/runs/38597167491) bestand auf dem PR-Head.
+- `guenny9000-uni-lern-bloc` PR #2 (maschinenlesbarer Lernvertrag und Tests) → `9c1a5cf393ac3eaa0e603acb6db2dc16a8dac23c`.
+- `guenny9000-uni-lern-bloc` PR #3 (MAX-BEST-Lernblock und aktualisierter Reality-First-Audit) → `1d0ed2ece8053774c4893a4db60dc882279bb6ab`.
+
+Keine dieser CI-Prüfungen ersetzt eine Live-Prüfung auf dem Windows-PC. Lokale Sensorwerte, laufende Prozesse, Ledger-Unveränderbarkeit und Produktivbetrieb bleiben `UNBEKANNT`, bis entsprechende lokale Nachweise vorliegen.

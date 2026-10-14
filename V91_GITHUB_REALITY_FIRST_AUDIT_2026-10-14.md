@@ -9,12 +9,12 @@
 ### 1. v91-core-system
 
 - **Original finding:** the default controller generated random metrics and could invoke host/Docker actions from those values.
-- **Implemented on review branch:** PR [#10](https://github.com/guenny9000/v91-core-system/pull/10) keeps the random controller as a manual demo and changes the Compose stack to a real filesystem observer plus shared-queue workers.
+- **Merged to main:** PR [#10](https://github.com/guenny9000/v91-core-system/pull/10) keeps the random controller as a manual demo and changes the Compose stack to a real filesystem observer plus shared-queue workers. Merge commit: `267f1f45a48b342f20c75954d5daa406a2bae31b`.
 - **Real work:** the worker accepts only `health_snapshot`, `sha256_file`, and `verify_sha256`. Tasks require a purpose and expected effect, reject unsupported fields/actions, enforce workspace boundaries and size limits, and write results plus audit events.
 - **Real control:** host-side `runtime_control.py` reads actual Docker Compose state and CPU/memory metrics. It can scale only the worker service from 1 to 3 replicas; scale-up and scale-down have separate explicit authorization settings. It records the decision before acting, verifies the result, measures resource deltas, and attempts rollback after failed verification.
 - **Isolation:** Compose uses an internal-only Docker network with no published ports. The controller/worker containers are not given the Docker socket. The Windows host launcher defaults to observation only.
 - **Evidence:** GitHub Actions [run](https://github.com/guenny9000/v91-core-system/actions/runs/38585438842) passed Compose validation, unit tests, Python compilation, a container build, a real container task integration test, observer/audit checks, and checksum artifact generation on commit `6c16d753a1644523e6962093c07fcdb4b6218af7`.
-- **Limit:** PR #10 is open and not merged. CI exercised containers on GitHub's runner; no action was executed on the user's PC. The JSONL log is not WORM or signed, application-level latency/error telemetry is not connected, and production deployment is unverified.
+- **Current safety follow-up:** PR [#11](https://github.com/guenny9000/v91-core-system/pull/11) adds explicit `UNKNOWN`/`NO_DATA_AVAILABLE` logging for missing live telemetry and regression tests separating missing CPU data from measured `0.0%`. At this snapshot, its CI run is still in progress; do not treat it as merged until the exact head passes and the merge is confirmed.\n- **Limit:** CI exercised containers on GitHub's runner; no action was executed on the user's PC. The JSONL log is not WORM or signed, application-level latency/error telemetry is not connected, and production deployment is unverified.
 
 ### 2. v91-audit-ledger
 
@@ -41,13 +41,13 @@ This repository contains hundreds of files. The work below addresses selected hi
 
 ### 5. guenny9000-uni-lern-bloc
 
-- PR [#2](https://github.com/guenny9000/guenny9000-uni-lern-bloc/pull/2) adds a machine-readable learning contract and tests. Its GitHub Actions validation passed on commit `81157439c3033145fe13b550cfab321f8c49ff78`.
+- PR [#2](https://github.com/guenny9000/guenny9000-uni-lern-bloc/pull/2) adds a machine-readable learning contract, validator, regression tests, and GitHub Actions workflow. It is now merged to `main` as `9c1a5cf393ac3eaa0e603acb6db2dc16a8dac23c`; its validation passed on PR head `81157439c3033145fe13b550cfab321f8c49ff78`.
 - PR [#3](https://github.com/guenny9000/guenny9000-uni-lern-bloc/pull/3) adds the MAX BEST learning and ecology protocol.
 - **Limit:** the learning block is a versioned instruction, not model training and not proof that another model or local system has adopted it.
 
 ## Cross-repository state
 
-- No implementation PR listed above has been merged by this work.
+- Confirmed merges during this work: `v91-core-system` PR #10 and `guenny9000-uni-lern-bloc` PR #2. Other PRs remain proposals unless their merge state is checked separately.
 - CI success applies only to the exact commit and checks linked above.
 - GitHub access does not establish access to the user's Windows PC, AMD CPU, local models, network isolation, or production environment.
 - No local hardware readings, live telemetry, or production status were fabricated.

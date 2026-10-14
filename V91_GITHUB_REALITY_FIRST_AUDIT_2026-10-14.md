@@ -18,7 +18,7 @@
 
 - **Finding:** the repository was empty, so it had no ledger implementation to verify.
 - **Change:** initialized the empty repository with an honest README, then opened PR [#1](https://github.com/guenny9000/v91-audit-ledger/pull/1) containing a local Python-standard-library JSONL ledger with canonical hashing, sequential records, chain verification, exclusive locking, and fail-closed handling.
-- **Evidence:** GitHub Actions [run](https://github.com/guenny9000/v91-audit-ledger/actions/runs/38579070702) passed on commit `c4c5912748878aed6c93266722cf58174f41e7d8`.
+- **Evidence:** GitHub Actions [run](https://github.com/guenny9000/v91-audit-ledger/actions/runs/38581344446) passed on commit `71aba085c3697f935f97115e2403996d0b2249c1`, including a regression test that rejects malformed UTC timestamps even when the hash is recomputed.
 - **Limit:** hash-linked JSONL is not WORM, does not establish identity or trusted time, and does not prove that event contents are true. The implementation PR is not merged.
 
 ### 3. Aurelia-Prisma

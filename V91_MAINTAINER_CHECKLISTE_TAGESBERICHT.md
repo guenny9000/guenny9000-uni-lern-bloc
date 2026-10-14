@@ -136,10 +136,11 @@ Offene Punkte und verantwortlicher nächster Schritt:
 ### 4. Aurelia-Prisma – PR #234
 
 - PR: https://github.com/guenny9000/Aurelia-Prisma/pull/234
-- Head-Commit: `03b8f9b6027ca38d1bf16467bb24db9566c80f44`
-- CI: https://github.com/guenny9000/Aurelia-Prisma/actions/runs/38580867623 und https://github.com/guenny9000/Aurelia-Prisma/actions/runs/38580867559 — beide **success**.
-- Der PR enthält unter anderem fail-closed-Validierung, explizite unkalibrierte Vertrauenswerte, Eingabegrößenbegrenzungen, loopback-gebundenen Standard-Port und standardmäßig deaktivierte automatische Neustarts.
-- Status bleibt offen/nicht gemergt; CI belegt nur die konkret ausgeführten Prüfungen auf diesem Commit. Keine Bereitstellung oder echte Neustartaktion wurde durch diese Prüfung ausgeführt.
+- Aktueller geprüfter Head-Commit: `c81c64a373c5d8b293dc758121ad4b8c02c7f658`
+- CI: https://github.com/guenny9000/Aurelia-Prisma/actions/runs/38587522550 und https://github.com/guenny9000/Aurelia-Prisma/actions/runs/38587522735 — beide **success** auf diesem Head.
+- Zusätzlich korrigiert: Das vorherige Restart-Skript enthielt weiterhin `-ExecutionPolicy Bypass`, beendete beliebige Prozesse auf Zielports mit Force und startete V94 auf `0.0.0.0`, obwohl die PR-Dokumentation etwas anderes behauptete. Das Skript ist jetzt auf explizites Opt-in begrenzt, prüft Prozessidentität, lässt fremde Listener unangetastet, dokumentiert Grund und erwarteten Effekt, bindet die drei Dienste an Loopback, prüft Health-Endpunkte und versucht eine begrenzte Rückkehr zur vorherigen Dienstmenge.
+- Der globale Starthelfer bindet V91/Flowise lokal, lädt keine fehlenden Images automatisch herunter und behauptet keine implementierte Autoskalierung mehr.
+- **Nicht getestet:** PowerShell-Skript wurde nicht auf Windows ausgeführt; die CI prüft die Python-Logik, kompiliert die Python-Module, baut das V94-Image und prüft Sicherheitsinvarianten statisch. Keine Dienste wurden gestartet oder neu gestartet.
 
 ### 5. Repository-Zugriff und Status
 
@@ -157,3 +158,8 @@ Offene Punkte und verantwortlicher nächster Schritt:
 - **NICHT PRODUKTIV VERIFIZIERT:** Hardwarezugriff, lokale Modelle, allgemeines autonomes Handeln, dauerhafte/extern verankerte Audit-Unveränderbarkeit und anwendungsbezogene Leistungsverbesserung.
 
 **Nächster sinnvoller Schritt:** PR-Diffs und CI-Ausgaben prüfen, dann die offenen PRs einzeln bewusst übernehmen. Anschließend den lokalen Windows-Start mit unveränderten Logs und konkreter Task-Ausgabe prüfen. Eine lokale Live-Messung darf erst nach tatsächlichem Zugriff behauptet werden.
+
+
+### Korrektur zur GitHub-Historie – 2026-10-14
+
+Eine neue statische Regressionstest-Datei wurde versehentlich einmal direkt auf dem Default-Branch von `Aurelia-Prisma` angelegt. Der Fehler wurde unmittelbar korrigiert: Die Datei wurde wieder entfernt und ausschließlich auf dem Review-Branch neu angelegt. Aktuell ist `tests/test_v95_restart_script_safety.py` auf `main` nicht vorhanden; die Git-Historie enthält den Additions-Commit und den anschließenden Revert-Commit. Es wurden keine Laufzeitdateien, Daten oder Dienste verändert. Diese Abweichung von der vorgesehenen PR-only-Arbeitsweise wird ausdrücklich dokumentiert statt verschwiegen.

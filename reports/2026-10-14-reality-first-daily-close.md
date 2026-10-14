@@ -25,7 +25,7 @@ Gemeldet wurden passiver, ressourcenschonender Überwachungsmodus und keine offe
 - **Keine erfundenen Live-Werte:** Ohne direkten Sensor-/Hostzugriff keine Aussagen über aktuelle Temperatur, CPU, RAM, GPU oder Prozesszustände.
 - **Keine unverdienten PASS-Meldungen:** Prüfungen müssen Quelle, Zeit, Methode, Ergebnis und Wiederholbarkeit nennen.
 - **Globale Wirkung nicht behaupten:** Lokale Regeln oder Code können Absichten und begrenzte technische Kontrollen belegen; sie beweisen keine weltweite Neutralisierung gesellschaftlicher Strukturen.
-- **Keine destruktiven Eingriffe:** Daten und Funktionen bewahren; keine Dienste stoppen, keine Daten löschen, keine PRs mergen und keine Produktionskonfiguration ändern.
+- **Keine unautorisierten Eingriffe:** Daten und Funktionen bewahren; keine Dienste stoppen, keine Daten löschen und keine PRs ohne ausdrückliche Freigabe mergen. Eine Freigabe ersetzt nicht die Prüfung von Tests, Konflikten und Rückfallwegen.
 
 ## 3. Proaktive Tagesabschluss-Regel
 
@@ -51,3 +51,31 @@ Ein Tagesabschluss soll keine unnötige Rückfrage erzeugen, wenn die nächste s
 - **NICHT AUSGEFÜHRT:** Keine lokale Hardwaremessung und keine unabhängige Ausführung der genannten Prüfungen im Rahmen dieser Berichtserstellung.
 
 **Tagesabschluss:** Auf Basis der hier verfügbaren Belege ist keine weitere Nutzeraktion für die Dokumentation nötig. Das ist keine Bestätigung, dass lokale V91-Prozesse autonom weiterlaufen. Morgen zuerst vorhandene, konkrete Nachweise prüfen und daraus höchstens drei sichere Verbesserungen ableiten.
+
+
+## 6. Nachtrag zum tatsächlichen Tagesabschluss – 2026-10-14, ca. 16:22 UTC
+
+Dieser Nachtrag aktualisiert den ursprünglichen Bericht nach den tatsächlich ausgeführten Repository-Aktionen. Frühere Aussagen zum damaligen offenen Merge-Status sind eine Momentaufnahme und kein aktueller Status.
+
+### Zusammengeführt
+
+- `v91-core-system` PR #10: zusammengeführt als `267f1f45a48b342f20c75954d5daa406a2bae31b`. Die zugehörige CI lief auf PR-Head `6c16d753a1644523e6962093c07fcdb4b6218af7` erfolgreich; kein Live-Eingriff auf dem Windows-PC.
+- `v91-core-system` PR #11: Sicherheitskorrektur für fehlende Live-Telemetrie, zusammengeführt als `a9131bf80302b1c858c66877db7e7139aa9531ea`. CI-Lauf [38597167491](https://github.com/guenny9000/v91-core-system/actions/runs/38597167491) war auf PR-Head `3fee07bd368fc61b4ad3ecfd05bbde7c412a49cd` erfolgreich: Compose-Validierung, Unit-Tests, Python-Kompilierung, Container-Integrationstest und Hash-Artefakte.
+- `guenny9000-uni-lern-bloc` PR #2: maschinenlesbarer Lernvertrag, Prüfer und Regressionstests zusammengeführt als `9c1a5cf393ac3eaa0e603acb6db2dc16a8dac23c`. CI war auf dem PR-Head erfolgreich.
+- `guenny9000-uni-lern-bloc` PR #3: MAX-BEST-Lern- und Ökologieprotokoll samt aktualisiertem Reality-First-Audit zusammengeführt als `1d0ed2ece8053774c4893a4db60dc882279bb6ab`.
+
+### Sicherheitsregel CPU/RAM
+
+- Ein tatsächlich gemessener Wert von `0.0%` ist ein Zahlenwert.
+- Eine fehlende oder nicht verifizierbare Messung ist `UNKNOWN`, numerisch `null`, und darf nie als gemessene Null ausgegeben werden.
+- Bei nicht verifizierbarer Pflicht-Telemetrie: `NO_DATA_AVAILABLE`, keine automatische Aktion und nicht erfolgreicher Prozess-Exitcode.
+- Der Regressionstest unterscheidet fehlende Messdaten und gemessene Null.
+
+### Weiterhin unbekannt / nicht erledigbar ohne lokale Daten
+
+- Aktuelle CPU-/GPU-/RAM-Temperaturen und Last auf den beiden PCs.
+- Ob Docker und die geänderten Skripte auf dem Windows-PC laufen.
+- Ob die lokale Ledger-Datei vollständig, unverändert, extern verankert oder WORM-geschützt ist.
+- Produktivbetrieb, Dauerbetrieb und reale ökologische Einsparung.
+
+**Endstatus:** Die genannten Repository-Änderungen sind tatsächlich zusammengeführt; die zugehörige CI-Prüfung für die Telemetrie-Korrektur war erfolgreich. Lokale Hardware- und Produktivzustände bleiben `UNBEKANNT`, bis reale lokale Messdaten oder Logs geprüft werden.

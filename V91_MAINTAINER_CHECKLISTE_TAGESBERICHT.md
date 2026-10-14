@@ -100,3 +100,78 @@ Offene Punkte und verantwortlicher nächster Schritt:
 ## Reality-First-Schlussregel
 
 **CLAIM ≠ EVIDENCE.** Eine Aussage gilt nur in dem Umfang als belegt, den Quelle, Zugriff und reproduzierbares Ergebnis tatsächlich tragen. `UNBEKANNT` ist ein gültiges Prüfergebnis, wenn Grund und nächster sicherer Klärungsschritt genannt werden. Statuszeichen, Modellbestätigung oder erfolgreiche CI-Läufe belegen für sich allein keinen Produktivbetrieb.
+
+
+## Laufender Reality-First-Umsetzungsbericht – 2026-10-14
+
+**Arbeitsumfang:** Reale Fehler korrigiert und in getrennten Review-Branches dokumentiert. Keine Änderungen direkt in `main` übernommen; keine Pull Requests gemergt; kein Zugriff auf den Windows-PC des Nutzers und keine Live-Steueraktion auf dessen Rechner ausgeführt.
+
+### 1. v91-core-system – PR #10
+
+- PR: https://github.com/guenny9000/v91-core-system/pull/10
+- Geprüfter Commit: `6c16d753a1644523e6962093c07fcdb4b6218af7`
+- CI: https://github.com/guenny9000/v91-core-system/actions/runs/38585438842 — **success**
+- Tatsächlich bestandene Schritte: Compose-Konfiguration, Unit-Tests, Python-Kompilierung, Container-Build, Container-Integrationstest, Hash-Artefakte.
+- Geändert: passiver Worker-Platzhalter ersetzt; echte Offline-Warteschlangenaufgaben für Status, SHA-256 und SHA-256-Vergleich; Pflichtfelder `purpose` und `expected_effect`; Audit-Ereignis vor der Ausführung; echte Warteschlangenbeobachtung; Größen- und Pfadgrenzen; read-only Arbeitsbereich; internes Docker-Netz ohne externe Route; Windows-Hilfsskript für Beispielaufgabe; Host-Steuerung nur mit ausdrücklicher Freigabe und begrenzter Worker-Skalierung.
+- Integrationstest belegt die konkrete Datei-Hash-Aufgabe im CI-Container. Er belegt nicht den Betrieb auf dem lokalen Windows-PC.
+- Offen: Host-Steuerung wurde hier nicht live ausgeführt; JSONL ist kein WORM und nicht signiert; anwendungsbezogene Fehler-/Latenzmessung und Produktivbetrieb sind nicht nachgewiesen.
+
+### 2. V91_Agathon – PR #2
+
+- PR: https://github.com/guenny9000/V91_Agathon/pull/2
+- Geprüfter Commit: `2ed7e14b5eecdc3514bd7ca545f349b18f153e8e`
+- CI: https://github.com/guenny9000/V91_Agathon/actions/runs/38586188548 — **success**
+- Tatsächlich bestandene Schritte: Paketinstallation, Quell-/Test-Kompilierung, Tests und Paketmetadaten.
+- Behobene Mismatches: Hash-Chain-Logger fehlte trotz Testimport; AuditDeep fehlte Chain-Verifikation und vollständige Ed25519-Schnittstelle; `__init__.py` importierte nicht vorhandene Komponenten; `core.py` enthielt ungültigen Python-Text; Packaging verwies auf einen Platzhalterpaketnamen; README zeigte auf ein fehlendes Beispiel.
+- Explizit nicht implementiert: Semgrep-Scan/Policy-Erzeugung, Multi-Node-Lifecycle, persistente Schlüsselverwaltung, Hardware-Telemetrie und produktiver Ledger.
+
+### 3. v91-audit-ledger – PR #2
+
+- PR: https://github.com/guenny9000/v91-audit-ledger/pull/2
+- Geprüfter Commit: `a023df6bc2e9d08697d0d56238a3ab6d47297ab8`
+- CI: https://github.com/guenny9000/v91-audit-ledger/actions/runs/38586397764 — **success**
+- Implementiert: lokale JSONL-Hash-Kette, Sequenz-/Vorgängerprüfung, Verifikation vor Append, fail-closed bei beschädigten Daten, Lock-Konflikten und Symlinks; Tests verwenden temporäre Dateien.
+- Grenzen: Hash-Kette allein ist weder WORM noch Beweis für Wahrheit, Identität oder vertrauenswürdige Zeit. Keine Netzwerkdienste und kein Produktivbetrieb.
+
+### 4. Aurelia-Prisma – PR #234
+
+- PR: https://github.com/guenny9000/Aurelia-Prisma/pull/234
+- Aktueller geprüfter Head-Commit: `c81c64a373c5d8b293dc758121ad4b8c02c7f658`
+- CI: https://github.com/guenny9000/Aurelia-Prisma/actions/runs/38587522550 und https://github.com/guenny9000/Aurelia-Prisma/actions/runs/38587522735 — beide **success** auf diesem Head.
+- Zusätzlich korrigiert: Das vorherige Restart-Skript enthielt weiterhin `-ExecutionPolicy Bypass`, beendete beliebige Prozesse auf Zielports mit Force und startete V94 auf `0.0.0.0`, obwohl die PR-Dokumentation etwas anderes behauptete. Das Skript ist jetzt auf explizites Opt-in begrenzt, prüft Prozessidentität, lässt fremde Listener unangetastet, dokumentiert Grund und erwarteten Effekt, bindet die drei Dienste an Loopback, prüft Health-Endpunkte und versucht eine begrenzte Rückkehr zur vorherigen Dienstmenge.
+- Der globale Starthelfer bindet V91/Flowise lokal, lädt keine fehlenden Images automatisch herunter und behauptet keine implementierte Autoskalierung mehr.
+- **Nicht getestet:** PowerShell-Skript wurde nicht auf Windows ausgeführt; die CI prüft die Python-Logik, kompiliert die Python-Module, baut das V94-Image und prüft Sicherheitsinvarianten statisch. Keine Dienste wurden gestartet oder neu gestartet.
+
+### 5. Repository-Zugriff und Status
+
+- `v91-core-system`, `V91_Agathon`, `v91-audit-ledger` und `guenny9000-uni-lern-bloc` waren über die verbundenen GitHub-Werkzeuge lesbar.
+- `Aurelia-Prisma` war über die verbundene GitHub-Sitzung lesbar, obwohl das Repository privat ist.
+- Weitere erreichbare Repositories wurden in der Repository-Liste gesehen; sie wurden in dieser Runde nicht vollständig inhaltlich geprüft. Für `Aurelia-Prisma` wurde hier der relevante PR-Diff geprüft, nicht der gesamte Repository-Bestand.
+- Die hier aufgeführten Änderungen liegen auf Review-Branches/Pull Requests. **Keine davon ist durch diesen Bericht als in `main` übernommen zu verstehen.**
+
+### Gesamtstatus nach Reality-First
+
+- **BELEGT:** Die genannten GitHub-CI-Läufe meldeten Erfolg auf den genannten Commits.
+- **BELEGT:** Die drei neuen PRs sind getrennt und offen; die ursprünglichen Default-Branches wurden nicht direkt geändert.
+- **TEILWEISE BELEGT:** Die Kern-Container können in CI reale lokale Aufgaben verarbeiten und protokollieren.
+- **UNBEKANNT:** Ob dieselben Stände auf dem Windows-PC des Nutzers laufen, wie dort Ressourcenwerte aussehen und ob die lokale Docker-Umgebung korrekt konfiguriert ist.
+- **NICHT PRODUKTIV VERIFIZIERT:** Hardwarezugriff, lokale Modelle, allgemeines autonomes Handeln, dauerhafte/extern verankerte Audit-Unveränderbarkeit und anwendungsbezogene Leistungsverbesserung.
+
+**Nächster sinnvoller Schritt:** PR-Diffs und CI-Ausgaben prüfen, dann die offenen PRs einzeln bewusst übernehmen. Anschließend den lokalen Windows-Start mit unveränderten Logs und konkreter Task-Ausgabe prüfen. Eine lokale Live-Messung darf erst nach tatsächlichem Zugriff behauptet werden.
+
+
+### Korrektur zur GitHub-Historie – 2026-10-14
+
+Eine neue statische Regressionstest-Datei wurde versehentlich einmal direkt auf dem Default-Branch von `Aurelia-Prisma` angelegt. Der Fehler wurde unmittelbar korrigiert: Die Datei wurde wieder entfernt und ausschließlich auf dem Review-Branch neu angelegt. Aktuell ist `tests/test_v95_restart_script_safety.py` auf `main` nicht vorhanden; die Git-Historie enthält den Additions-Commit und den anschließenden Revert-Commit. Es wurden keine Laufzeitdateien, Daten oder Dienste verändert. Diese Abweichung von der vorgesehenen PR-only-Arbeitsweise wird ausdrücklich dokumentiert statt verschwiegen.
+
+
+## Aktualisierung nach den Repository-Merges – 2026-10-14, ca. 16:22 UTC
+
+Der obige laufende Bericht dokumentiert den früheren Prüfstand. Seitdem wurden diese Änderungen tatsächlich zusammengeführt:
+
+- `v91-core-system` PR #10 → `267f1f45a48b342f20c75954d5daa406a2bae31b`.
+- `v91-core-system` PR #11 (fehlende CPU/RAM-Telemetrie als `UNKNOWN`, nicht als Null; keine Aktion ohne Messnachweis) → `a9131bf80302b1c858c66877db7e7139aa9531ea`. CI-Lauf [38597167491](https://github.com/guenny9000/v91-core-system/actions/runs/38597167491) bestand auf dem PR-Head.
+- `guenny9000-uni-lern-bloc` PR #2 (maschinenlesbarer Lernvertrag und Tests) → `9c1a5cf393ac3eaa0e603acb6db2dc16a8dac23c`.
+- `guenny9000-uni-lern-bloc` PR #3 (MAX-BEST-Lernblock und aktualisierter Reality-First-Audit) → `1d0ed2ece8053774c4893a4db60dc882279bb6ab`.
+
+Keine dieser CI-Prüfungen ersetzt eine Live-Prüfung auf dem Windows-PC. Lokale Sensorwerte, laufende Prozesse, Ledger-Unveränderbarkeit und Produktivbetrieb bleiben `UNBEKANNT`, bis entsprechende lokale Nachweise vorliegen.

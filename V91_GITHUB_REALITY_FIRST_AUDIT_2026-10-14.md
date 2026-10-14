@@ -35,7 +35,7 @@ This repository contains hundreds of files. The work below addresses selected hi
 
 - **Change:** PR [#1](https://github.com/guenny9000/V91_Agathon/pull/1) makes core helpers executable, adds a synthetic offline demo, hardens hash-chain verification and lock behavior, and explicitly labels Semgrep/multi-node functions as unimplemented.
 - **Evidence:** GitHub Actions [package tests](https://github.com/guenny9000/V91_Agathon/actions/runs/38579593171) passed on Python 3.10 and 3.12 at commit `16be1f44d42137254bcc5b376a040fa76461ceec`.
-- **Limit:** the PR remains draft. Semgrep execution, multi-node transport, persistent key management, trusted identity, and production operation are not implemented.
+- **Limit:** the PR remains draft and GitHub currently reports it as not mergeable; its branch has diverged from `main` (29 commits ahead, 3 behind at the last comparison). Reconcile that history before merge. Semgrep execution, multi-node transport, persistent key management, trusted identity, and production operation are not implemented.
 
 ### 5. guenny9000-uni-lern-bloc
 

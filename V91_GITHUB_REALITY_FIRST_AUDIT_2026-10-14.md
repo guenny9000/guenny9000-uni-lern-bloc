@@ -8,11 +8,13 @@
 
 ### 1. v91-core-system
 
-- **Finding:** the default-branch controller generated random synthetic metrics and used `os.system` to change Docker worker counts or restart workers based on those values. That could turn simulation into real host action.
-- **Change proposed:** PR [#10](https://github.com/guenny9000/v91-core-system/pull/10) labels the source as simulation, turns actions into proposals only, rejects invalid metrics, and scores anomalies against the prior observation window.
-- **Evidence:** GitHub Actions [run #89](https://github.com/guenny9000/v91-core-system/actions/runs/38578372467) succeeded on commit `9c9e469484f2d37f50389cd72145301a8920709f`.
-- **Documentation:** PR [#9](https://github.com/guenny9000/v91-core-system/pull/9) corrects unsupported production-readiness claims.
-- **Limit:** neither PR is merged; no production deployment or live telemetry was verified.
+- **Original finding:** the default controller generated random metrics and could invoke host/Docker actions from those values.
+- **Implemented on review branch:** PR [#10](https://github.com/guenny9000/v91-core-system/pull/10) keeps the random controller as a manual demo and changes the Compose stack to a real filesystem observer plus shared-queue workers.
+- **Real work:** the worker accepts only `health_snapshot`, `sha256_file`, and `verify_sha256`. Tasks require a purpose and expected effect, reject unsupported fields/actions, enforce workspace boundaries and size limits, and write results plus audit events.
+- **Real control:** host-side `runtime_control.py` reads actual Docker Compose state and CPU/memory metrics. It can scale only the worker service from 1 to 3 replicas; scale-up and scale-down have separate explicit authorization settings. It records the decision before acting, verifies the result, measures resource deltas, and attempts rollback after failed verification.
+- **Isolation:** Compose uses an internal-only Docker network with no published ports. The controller/worker containers are not given the Docker socket. The Windows host launcher defaults to observation only.
+- **Evidence:** GitHub Actions [run](https://github.com/guenny9000/v91-core-system/actions/runs/38585438842) passed Compose validation, unit tests, Python compilation, a container build, a real container task integration test, observer/audit checks, and checksum artifact generation on commit `6c16d753a1644523e6962093c07fcdb4b6218af7`.
+- **Limit:** PR #10 is open and not merged. CI exercised containers on GitHub's runner; no action was executed on the user's PC. The JSONL log is not WORM or signed, application-level latency/error telemetry is not connected, and production deployment is unverified.
 
 ### 2. v91-audit-ledger
 

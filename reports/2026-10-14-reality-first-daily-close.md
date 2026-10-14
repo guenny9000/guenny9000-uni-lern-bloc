@@ -79,3 +79,13 @@ Dieser Nachtrag aktualisiert den ursprünglichen Bericht nach den tatsächlich a
 - Produktivbetrieb, Dauerbetrieb und reale ökologische Einsparung.
 
 **Endstatus:** Die genannten Repository-Änderungen sind tatsächlich zusammengeführt; die zugehörige CI-Prüfung für die Telemetrie-Korrektur war erfolgreich. Lokale Hardware- und Produktivzustände bleiben `UNBEKANNT`, bis reale lokale Messdaten oder Logs geprüft werden.
+
+
+## 7. Letzter Abschluss-Nachtrag – 2026-10-14, ca. 16:25 UTC
+
+- `v91-core-system` PR #13 korrigiert die Anomalieerkennung und ergänzt Regressionstests; zusammengeführt als `401d9f6db77f28ca3a3811387bcade02bd9674c6`.
+- CI-Lauf [38597783948](https://github.com/guenny9000/v91-core-system/actions/runs/38597783948) war auf dem PR-Head `378b04be739662448377862a3aa83ead2213c181` erfolgreich. Bestanden: Compose-Validierung, Unit-Tests, Python-Kompilierung, Container-Integration, Hash-Prüfung und Artefakt-Upload.
+- Die ältere PR #2 zur Anomalieerkennung wurde geschlossen, weil ihre Workflow-Änderung die neuere Container-Integration hätte überschreiben können. Die Code- und Teständerungen wurden separat auf aktuellem `main` neu eingereicht und nach erfolgreicher CI zusammengeführt.
+- README-Reality-First-Korrektur in `v91-core-system` PR #12 wurde ebenfalls zusammengeführt als `feb9d66fb70826e7eb81ec161a00a09d56819e8f`; der anschließende Push-CI-Lauf [38597702803](https://github.com/guenny9000/v91-core-system/actions/runs/38597702803) meldete Erfolg.
+
+**Aktueller Abschluss:** Die sicheren, getesteten Änderungen aus den heutigen Arbeiten sind in den beiden bearbeiteten Repositories zusammengeführt. Offene, umfangreiche Sicherheits-/Kooperations-PRs im Core-System wurden nicht blind zusammengeführt, weil sie Konflikte, Workflow-Überschneidungen oder noch nicht gelöste Vertrauens-/Protokollfragen enthalten. Der lokale Windows-PC, echte Sensorwerte, produktiver Dauerbetrieb und WORM-Speicherung bleiben nicht verifiziert.

@@ -83,3 +83,28 @@ Nächster sicherer Schritt:
 ```
 
 **Schlussregel:** Aktiv nach sicheren Möglichkeiten suchen. Unsicherheit klar benennen und einen konkreten Weg zur Klärung angeben. Niemals fehlende Belege durch Zahlen, Statussiegel oder bloße Behauptungen ersetzen.
+
+
+## Messwert oder fehlender Messwert – verbindliche Sicherheitsregel
+
+Ein numerischer Messwert und ein nicht vorhandener Messwert sind zwei verschiedene Zustände:
+
+- **Messung erfolgreich, CPU = 0,0 %:** numerischer Wert `0.0`, Einheit `%`, Quelle, Zeitstempel und Messmethode speichern. Nur dann ist „null Prozent“ eine Messung.
+- **Messung nicht möglich, Quelle fehlt, Ausgabe ungültig oder Messung nicht verifiziert:** Wert `null`/nicht vorhanden und Status `UNKNOWN` oder `NO_DATA_AVAILABLE` speichern. Niemals einen Standardwert `0` einsetzen.
+- **Fehlende Pflichtmessung:** keine Entscheidung treffen, die diese Messung voraussetzt; keine automatische Aktion ausführen. Den Grund und den Prüfversuch protokollieren.
+- **Teilweise verfügbare Messung:** vorhandene Größen einzeln als gemessen kennzeichnen; fehlende Größen bleiben einzeln `UNKNOWN`. Eine fehlende CPU-Messung macht RAM nicht automatisch unbekannt, und umgekehrt.
+- **Ungültige oder veraltete Daten:** nicht als Live-Wert behandeln. Quelle, Alter und Validierungsfehler getrennt ausweisen.
+- **Statusregel:** `UNKNOWN` ist kein gemessener Nullwert und nicht automatisch ein Fehler des Systems. Es bedeutet, dass die erforderliche Aussage mit den verfügbaren Belegen nicht getroffen werden kann.
+
+Beispiel:
+
+```json
+{
+  "cpu_percent": {"value": 0.0, "unit": "%", "status": "MEASURED"},
+  "memory_percent": {"value": null, "unit": "%", "status": "UNKNOWN"},
+  "action": "NO_ACTION",
+  "status": "NO_DATA_AVAILABLE"
+}
+```
+
+Dieses Beispiel ist ein Schema, keine Live-Messung. Eine reale Messung braucht Quelle, Erfassungszeitpunkt, Methode und konkrete Rohdaten.

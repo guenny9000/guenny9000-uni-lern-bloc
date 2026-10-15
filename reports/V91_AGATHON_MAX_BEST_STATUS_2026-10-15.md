@@ -47,3 +47,13 @@ A passing CI run verifies only the exact tested commit and checks executed. `CLA
 
 ## Operating rule
 Do only additive, reversible changes supported by evidence. No force-push, broad merge batch, destructive cleanup, network/production action, privilege escalation, or model-rule change without explicit authorization and a tested rollback. A successful CI run is not a production PASS.
+
+
+## Additional work completed later on 2026-10-15 — safe Windows verification
+- **Core PR #18 merged** as `af403ce3347f7bb2479de1e2f455449653d42fea`.
+- Added `scripts/V91-Local-Verify.ps1`, German instructions at `docs/V91_WINDOWS_LOCAL_VERIFICATION.md`, and a Windows-hosted CI workflow that executes the script and uploads a bounded evidence artifact.
+- Exact PR-head Windows verification passed: https://github.com/guenny9000/v91-core-system/actions/runs/38674370983
+- Exact PR-head core audit pipeline passed: https://github.com/guenny9000/v91-core-system/actions/runs/38674370919
+- The script was run on a GitHub-hosted Windows runner, **not on the user's own PC**. It does not fetch/pull code, install packages, start containers, deploy, or repair data.
+- Handoff and safe operating instructions: https://github.com/guenny9000/guenny9000-uni-lern-bloc/blob/main/reports/V91_WINDOWS_VERIFY_HANDOFF_2026-10-15.md
+- Post-merge CI is being checked separately. The local Windows runtime, actual user PC, production tool adapters, WORM storage, and model training remain UNKNOWN.

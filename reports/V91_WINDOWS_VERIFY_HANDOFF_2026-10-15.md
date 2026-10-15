@@ -10,10 +10,10 @@ Files:
 - `.github/workflows/windows-local-verify.yml`: runs the verifier on a GitHub-hosted Windows runner, with a short-lived evidence artifact.
 
 ## Exact-head evidence
-- Windows workflow run #175: https://github.com/guenny9000/v91-core-system/actions/runs/38674370983
+- Windows workflow run #1: https://github.com/guenny9000/v91-core-system/actions/runs/38674370983
 - Head SHA: `97d4fe4044596d8f326633d11a48f3da7f7b9c6b`
 - Observed steps: dependency setup succeeded; `Run local verification script without Docker` succeeded; evidence artifact upload succeeded. At last check the job was completing post-job cleanup; confirm final conclusion from the run URL.
-- Core audit pipeline run #174: https://github.com/guenny9000/v91-core-system/actions/runs/38674370919
+- Core audit pipeline run #175: https://github.com/guenny9000/v91-core-system/actions/runs/38674370919
 - At last check: compose config, unit tests, and compile steps succeeded; Compose worker/observer integration was still in progress. Do not merge until this run concludes successfully and PR mergeability is confirmed.
 
 ## What this does and does not prove

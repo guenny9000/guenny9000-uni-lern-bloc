@@ -4,14 +4,16 @@ on:
   push:
     paths:
       - "contracts/**"
+      - "learning-blocks/**"
       - "tools/**"
-      - "tests/test_learning_contract.py"
+      - "tests/"
       - ".github/workflows/learning-contract.yml"
   pull_request:
     paths:
       - "contracts/**"
+      - "learning-blocks/**"
       - "tools/**"
-      - "tests/test_learning_contract.py"
+      - "tests/"
       - ".github/workflows/learning-contract.yml"
   workflow_dispatch:
 
@@ -31,4 +33,4 @@ jobs:
       - name: Validate contract structure
         run: python tools/validate_learning_contract.py
       - name: Run regression tests
-        run: python -m unittest discover -s tests -p "test_learning_contract.py" -v
+        run: python -m unittest discover -s tests -p "test_*.py" -v
